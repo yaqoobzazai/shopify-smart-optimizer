@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopify SEO Optimizer Pro</title>
+    <style>
+        :root {
+            --primary: #1a1b23;
+            --secondary: #2a2d3a;
+            --accent: #00d4aa;
+            --accent-hover: #00b894;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --text-muted: #718096;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --error: #f56565;
+            --info: #4299e1;
+            --border: #2d3748;
+            --card-bg: #1e1f28;
+            --input-bg: #2d3748;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, #0f0f14 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 212, 170, 0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-20px, -20px) rotate(180deg); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), #00b894, #74b9ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .status-item {
+            background: var(--card-bg);
+            padding: 15px 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .status-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 170, 0.2);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Main Content */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .main-panel {
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .panel-header {
+            background: linear-gradient(135deg, var(--secondary), var(--card-bg));
+            padding: 25px 30px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .panel-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .panel-header p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .panel-content {
+            padding: 30px;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .nav-tab:hover {
+            color: var(--text-primary);
+            background: var(--secondary);
+        }
+
+        .nav-tab.active {
+            background: var(--accent);
+            color: var(--primary);
+            box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px 18px;
+            background: var(--input-bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.1);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: var(--primary);
+            box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 212, 170, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--input-bg);
+            transform: translateY(-1px);
+        }
+
+        .btn-danger {
+            background: var(--error);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        /* Field Selection */
+        .field-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .field-item {
+            background: var(--input-bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .field-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .field-item.selected {
+            border-color: var(--accent);
+            background: rgba(0, 212, 170, 0.1);
+        }
+
+        .field-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .field-item.selected::before {
+            transform: scaleX(1);
+        }
+
+        .field-checkbox {
+            display: none;
+        }
+
+        .field-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .field-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Progress */
+        .progress-container {
+            margin: 25px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--input-bg);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+            width: 0%;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 212, 170, 0.1);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Logs */
+        .log-container {
+            background: var(--primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'JetBrains Mono', 'Monaco', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .log-entry {
+            margin-bottom: 4px;
+            padding: 2px 0;
+            word-wrap: break-word;
+        }
+
+        .log-entry.success { color: var(--success); }
+        .log-entry.error { color: var(--error); }
+        .log-entry.warning { color: var(--warning); }
+        .log-entry.info { color: var(--info); }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            transition: .3s;
+            border-radius: 26px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background: var(--text-secondary);
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+            background: var(--primary);
+        }
+
+        /* Keywords Panel */
+        .keywords-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .keyword-item {
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .keyword-item:hover {
+            border-color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .keyword-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .keyword-text {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .keyword-grade {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            background: var(--success);
+            color: white;
+        }
+
+        .keyword-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .keyword-stat {
+            text-align: center;
+            padding: 8px;
+            background: var(--secondary);
+            border-radius: 8px;
+        }
+
+        .keyword-stat-value {
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+
+        .keyword-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .field-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+
+        /* Connection Status */
+        .connection-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .connection-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        .connection-dot.disconnected {
+            background: var(--error);
+        }
+
+        .connection-dot.connecting {
+            background: var(--warning);
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <h1>Shopify SEO Optimizer Pro</h1>
+                <p>Advanced AI-Powered Content Optimization with Google Trends Intelligence</p>
+                
+                <div class="status-bar">
+                    <div class="status-item">
+                        <div class="status-dot" id="statusDot"></div>
+                        <span id="statusText">System Ready</span>
+                    </div>
+                    <div class="connection-indicator" id="connectionStatus">
+                        <div class="connection-dot" id="connectionDot"></div>
+                        <span>Checking Connection...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analytics" class="tab-content">
+            <div class="main-grid">
+                <div class="main-panel">
+                    <div class="panel-header">
+                        <h2>📊 Real-time Analytics</h2>
+                        <p>Monitor optimization progress and performance</p>
+                    </div>
+                    <div class="panel-content">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <span class="stat-number" id="queueLength">0</span>
+                                <div class="stat-label">Queue Length</div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-number" id="processingTime">0s</span>
+                                <div class="stat-label">Processing Time</div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-number" id="trendsSuccess">0%</span>
+                                <div class="stat-label">Trends Success</div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-number" id="avgSeoScore">0</span>
+                                <div class="stat-label">Avg SEO Score</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">System Logs</label>
+                            <div class="log-container" id="logContainer">
+                                <div class="log-entry info">🎉 Shopify SEO Optimizer Pro initialized successfully</div>
+                                <div class="log-entry info">🎯 Advanced keyword research with Google Trends ready</div>
+                                <div class="log-entry info">💡 Configure your settings and start optimizing products</div>
+                            </div>
+                        </div>
+
+                        <div class="btn-group">
+                            <button class="btn btn-secondary" id="exportLogsBtn">📋 Export Logs</button>
+                            <button class="btn btn-secondary" id="clearLogsBtn">🗑️ Clear Logs</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="keywords-panel">
+                    <div class="panel-header">
+                        <h2>🎯 Keyword Performance</h2>
+                        <p>Track keyword analysis results</p>
+                    </div>
+                    <div class="panel-content">
+                        <div id="keywordAnalytics">
+                            <div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+                                <div style="font-size: 3rem; margin-bottom: 15px;">📈</div>
+                                <h4>No Data Yet</h4>
+                                <p>Keyword performance will appear here during optimization</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let isProcessing = false;
+        let processedCount = 0;
+        let totalCount = 0;
+        let startTime = null;
+        let processingInterval = null;
+        let statusInterval = null;
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            console.log('🚀 Initializing Shopify SEO Optimizer Pro...');
+
+            // Tab switching
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+
+            // Field selection
+            document.querySelectorAll('.field-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    toggleField(this);
+                });
+            });
+
+            // Button events
+            document.getElementById('testAnalysisBtn').addEventListener('click', testKeywordAnalysis);
+            document.getElementById('previewBtn').addEventListener('click', previewProducts);
+            document.getElementById('startOptimizationBtn').addEventListener('click', startOptimization);
+            document.getElementById('startBtn').addEventListener('click', startOptimization);
+            document.getElementById('stopBtn').addEventListener('click', stopOptimization);
+            document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
+            document.getElementById('testConnectionBtn').addEventListener('click', testConnection);
+            document.getElementById('exportLogsBtn').addEventListener('click', exportLogs);
+            document.getElementById('clearLogsBtn').addEventListener('click', clearLogs);
+
+            // Load settings
+            loadSettings();
+            checkConnection();
+
+            addLog('🎉 Shopify SEO Optimizer Pro loaded successfully', 'success');
+            addLog('🎯 Advanced keyword research with Google Trends ready', 'info');
+            addLog('💡 Configure your settings and start optimizing products', 'info');
+        }
+
+        function switchTab(tabName) {
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to selected tab and content
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        function toggleField(fieldItem) {
+            const checkbox = fieldItem.querySelector('.field-checkbox');
+            checkbox.checked = !checkbox.checked;
+            fieldItem.classList.toggle('selected', checkbox.checked);
+        }
+
+        function getSelectedFields() {
+            const fields = [];
+            document.querySelectorAll('.field-checkbox:checked').forEach(checkbox => {
+                fields.push(checkbox.id.replace('field_', ''));
+            });
+            return fields;
+        }
+
+        function addLog(message, type = 'info') {
+            const logContainer = document.getElementById('logContainer');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry ${type}`;
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        function updateStatus(text, isActive = false) {
+            document.getElementById('statusText').textContent = text;
+            const statusDot = document.getElementById('statusDot');
+            statusDot.style.background = isActive ? 'var(--accent)' : 'var(--success)';
+        }
+
+        function updateConnectionStatus(connected, text = '') {
+            const connectionDot = document.getElementById('connectionDot');
+            const connectionStatus = document.getElementById('connectionStatus');
+            
+            if (connected) {
+                connectionDot.className = 'connection-dot';
+                connectionStatus.innerHTML = `<div class="connection-dot"></div><span>Connected</span>`;
+            } else {
+                connectionDot.className = 'connection-dot disconnected';
+                connectionStatus.innerHTML = `<div class="connection-dot disconnected"></div><span>${text || 'Disconnected'}</span>`;
+            }
+        }
+
+        async function testKeywordAnalysis() {
+            const keyword = document.getElementById('testKeyword').value.trim();
+            if (!keyword) {
+                addLog('⚠️ Please enter a product title to test', 'warning');
+                return;
+            }
+
+            addLog(`🔍 Testing keyword analysis for: "${keyword}"`, 'info');
+            updateStatus('Analyzing Keywords...', true);
+
+            try {
+                const response = await fetch('/api/analyze-keywords', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        title: keyword,
+                        product_type: ''
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    displayKeywords(data.keywords);
+                    addLog(`✅ Analysis complete: ${data.keywords.length} keywords found`, 'success');
+                    document.getElementById('keywordsAnalyzed').textContent = data.keywords.length;
+                } else {
+                    addLog(`❌ Analysis failed: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                addLog(`❌ Network error: ${error.message}`, 'error');
+                updateConnectionStatus(false, 'Backend Offline');
+            }
+
+            updateStatus('System Ready');
+        }
+
+        function displayKeywords(keywords) {
+            const container = document.getElementById('keywordsDisplay');
+            
+            if (!keywords || keywords.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">❌</div>
+                        <h4>No Keywords Found</h4>
+                        <p>Try a different product title or check your connection</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            keywords.forEach((keywordData, index) => {
+                const seoScore = keywordData.seo_score;
+                const trendsData = keywordData.trends_data || {};
+                const gradeColors = {
+                    'A+': 'var(--success)',
+                    'A': 'var(--success)',
+                    'B+': 'var(--accent)',
+                    'B': 'var(--accent)',
+                    'C+': 'var(--warning)',
+                    'C': 'var(--warning)',
+                    'D': 'var(--error)'
+                };
+
+                html += `
+                    <div class="keyword-item" style="animation: fadeIn 0.3s ease ${index * 0.1}s both;">
+                        <div class="keyword-header">
+                            <div class="keyword-text">${keywordData.keyword}</div>
+                            <div class="keyword-grade" style="background: ${gradeColors[seoScore.grade] || 'var(--text-muted)'}">
+                                ${seoScore.grade}
+                            </div>
+                        </div>
+                        <div class="keyword-stats">
+                            <div class="keyword-stat">
+                                <span class="keyword-stat-value">${seoScore.total_score}</span>
+                                <span class="keyword-stat-label">Score</span>
+                            </div>
+                            <div class="keyword-stat">
+                                <span class="keyword-stat-value">${keywordData.interest || 0}</span>
+                                <span class="keyword-stat-label">Interest</span>
+                            </div>
+                            <div class="keyword-stat">
+                                <span class="keyword-stat-value">${getTrendEmoji(keywordData.trend_direction)}</span>
+                                <span class="keyword-stat-label">Trend</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function getTrendEmoji(trend) {
+            switch(trend) {
+                case 'rising': return '📈';
+                case 'declining': return '📉';
+                case 'stable': return '📊';
+                default: return '📊';
+            }
+        }
+
+        async function previewProducts() {
+            addLog('🔍 Fetching products with needs_update tag...', 'info');
+            updateStatus('Loading Products...', true);
+
+            try {
+                const response = await fetch('/api/preview');
+                const data = await response.json();
+
+                if (data.success) {
+                    addLog(`✅ Found ${data.count} products ready for optimization`, 'success');
+                    document.getElementById('totalProducts').textContent = data.count;
+                    
+                    data.sample_products.forEach((product, index) => {
+                        addLog(`📦 Product ${index + 1}: ${product.title.substring(0, 50)}...`, 'info');
+                    });
+                } else {
+                    addLog(`❌ Error: ${data.error}`, 'error');
+                    updateConnectionStatus(false, data.error);
+                }
+            } catch (error) {
+                addLog(`❌ Network error: ${error.message}`, 'error');
+                updateConnectionStatus(false, 'Backend Offline');
+            }
+
+            updateStatus('System Ready');
+        }
+
+        async function startOptimization() {
+            if (isProcessing) return;
+
+            const selectedFields = getSelectedFields();
+            if (selectedFields.length === 0) {
+                addLog('⚠️ Please select at least one field to update', 'warning');
+                return;
+            }
+
+            const requestData = {
+                fields: selectedFields,
+                limit: parseInt(document.getElementById('productLimit').value) || null,
+                skip_trends: !document.getElementById('enableTrends').checked,
+                trends_delay: parseInt(document.getElementById('trendsDelay').value) || 20,
+                region: document.getElementById('trendsRegion').value || 'DK',
+                language: document.getElementById('trendsLanguage').value || 'da-DK'
+            };
+
+            try {
+                const response = await fetch('/api/start', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    isProcessing = true;
+                    startTime = Date.now();
+                    
+                    document.getElementById('stopBtn').style.display = 'inline-flex';
+                    document.getElementById('startBtn').style.display = 'none';
+                    document.getElementById('startOptimizationBtn').style.display = 'none';
+                    document.getElementById('progressContainer').style.display = 'block';
+                    
+                    statusInterval = setInterval(pollStatus, 1000);
+                    processingInterval = setInterval(updateProcessingTime, 1000);
+                    
+                    updateStatus('Optimizing Products...', true);
+                    addLog('🚀 Starting smart optimization with keyword analysis...', 'info');
+                } else {
+                    addLog(`❌ Failed to start: ${data.error}`, 'error');
+                }
+                
+            } catch (error) {
+                addLog(`❌ Network error: ${error.message}`, 'error');
+                updateConnectionStatus(false, 'Backend Offline');
+            }
+        }
+
+        async function stopOptimization() {
+            try {
+                await fetch('/api/stop', { method: 'POST' });
+            } catch (error) {
+                console.log('Backend not available, stopping locally');
+            }
+            
+            isProcessing = false;
+            
+            if (processingInterval) {
+                clearInterval(processingInterval);
+                processingInterval = null;
+            }
+            
+            if (statusInterval) {
+                clearInterval(statusInterval);
+                statusInterval = null;
+            }
+            
+            document.getElementById('stopBtn').style.display = 'none';
+            document.getElementById('startBtn').style.display = 'inline-flex';
+            document.getElementById('startOptimizationBtn').style.display = 'inline-flex';
+            document.getElementById('progressContainer').style.display = 'none';
+            
+            updateStatus('System Ready');
+            addLog('⏹️ Optimization process stopped', 'warning');
+        }
+
+        async function pollStatus() {
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                
+                if (data.is_running) {
+                    updateProgress(data.progress, data.total);
+                    
+                    // Update stats
+                    document.getElementById('processedProducts').textContent = data.stats.processed;
+                    document.getElementById('queueLength').textContent = Math.max(0, data.total - data.progress);
+                    
+                    if (data.stats.processed > 0) {
+                        const successRate = Math.round((data.stats.successful / data.stats.processed) * 100);
+                        document.getElementById('successRate').textContent = successRate + '%';
+                    }
+                    
+                    if (data.stats.trends_success > 0 && data.stats.processed > 0) {
+                        const trendsRate = Math.round((data.stats.trends_success / data.stats.processed) * 100);
+                        document.getElementById('trendsSuccess').textContent = trendsRate + '%';
+                    }
+                    
+                    // Update enhanced stats
+                    if (data.stats.total_keywords_analyzed > 0) {
+                        document.getElementById('keywordsAnalyzed').textContent = data.stats.total_keywords_analyzed;
+                        document.getElementById('avgSeoScore').textContent = data.stats.avg_seo_score;
+                    }
+                    
+                    // Update current keywords display
+                    if (data.current_keywords && data.current_keywords.length > 0) {
+                        displayKeywords(data.current_keywords);
+                    }
+                    
+                    // Update logs
+                    data.logs.forEach(log => {
+                        const logContainer = document.getElementById('logContainer');
+                        const lastLog = logContainer.lastElementChild;
+                        const logText = `[${log.timestamp}] ${log.message}`;
+                        
+                        if (!lastLog || lastLog.textContent !== logText) {
+                            addLog(log.message, log.type);
+                        }
+                    });
+                    
+                } else {
+                    stopOptimization();
+                }
+                
+            } catch (error) {
+                console.log('Status polling failed');
+                updateConnectionStatus(false, 'Connection Lost');
+            }
+        }
+
+        function updateProgress(current, total) {
+            const percentage = total > 0 ? Math.round((current / total) * 100) : 0;
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = `Processing ${current} of ${total} products (${percentage}%)`;
+        }
+
+        function updateProcessingTime() {
+            if (startTime) {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                document.getElementById('processingTime').textContent = elapsed + 's';
+            }
+        }
+
+        function saveSettings() {
+            const settings = {
+                shopifyStore: document.getElementById('shopifyStore').value,
+                shopifyToken: document.getElementById('shopifyToken').value,
+                openaiKey: document.getElementById('openaiKey').value,
+                enableTrends: document.getElementById('enableTrends').checked,
+                trendsRegion: document.getElementById('trendsRegion').value,
+                trendsLanguage: document.getElementById('trendsLanguage').value,
+                trendsDelay: document.getElementById('trendsDelay').value
+            };
+            
+            localStorage.setItem('shopifyOptimizerSettings', JSON.stringify(settings));
+            addLog('💾 Settings saved successfully', 'success');
+        }
+
+        function loadSettings() {
+            const settings = localStorage.getItem('shopifyOptimizerSettings');
+            if (settings) {
+                const parsed = JSON.parse(settings);
+                Object.keys(parsed).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        if (element.type === 'checkbox') {
+                            element.checked = parsed[key];
+                        } else {
+                            element.value = parsed[key];
+                        }
+                    }
+                });
+                addLog('📥 Settings loaded from browser storage', 'info');
+            }
+        }
+
+        async function testConnection() {
+            addLog('🔍 Testing API connections...', 'info');
+            updateStatus('Testing Connection...', true);
+            
+            const settings = {
+                shopify_store: document.getElementById('shopifyStore').value,
+                shopify_token: document.getElementById('shopifyToken').value,
+                openai_key: document.getElementById('openaiKey').value,
+                skip_trends: !document.getElementById('enableTrends').checked,
+                trends_delay: parseInt(document.getElementById('trendsDelay').value) || 20
+            };
+            
+            try {
+                const response = await fetch('/api/test-connection', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(settings)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const results = data.results;
+                    
+                    if (results.shopify) {
+                        addLog('✅ Shopify connection: OK', 'success');
+                    } else {
+                        addLog('❌ Shopify connection: Failed', 'error');
+                    }
+                    
+                    if (results.openai) {
+                        addLog('✅ OpenAI connection: OK', 'success');
+                    } else {
+                        addLog('❌ OpenAI connection: Failed', 'error');
+                    }
+                    
+                    if (results.trends) {
+                        addLog('✅ Google Trends: Available', 'success');
+                    } else {
+                        addLog('⚠️ Google Trends: Limited', 'warning');
+                    }
+
+                    updateConnectionStatus(results.shopify && results.openai);
+                } else {
+                    addLog(`❌ Connection test failed: ${data.error}`, 'error');
+                    updateConnectionStatus(false, data.error);
+                }
+                
+            } catch (error) {
+                addLog(`❌ Backend not available: ${error.message}`, 'error');
+                updateConnectionStatus(false, 'Backend Offline');
+            }
+            
+            updateStatus('System Ready');
+        }
+
+        async function checkConnection() {
+            try {
+                const response = await fetch('/api/status');
+                updateConnectionStatus(response.ok);
+            } catch (error) {
+                updateConnectionStatus(false, 'Backend Offline');
+            }
+        }
+
+        function exportLogs() {
+            const logs = document.getElementById('logContainer').innerText;
+            const blob = new Blob([logs], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `optimizer-logs-${new Date().toISOString().slice(0, 10)}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+            addLog('📋 Logs exported successfully', 'success');
+        }
+
+        function clearLogs() {
+            const logContainer = document.getElementById('logContainer');
+            logContainer.innerHTML = '<div class="log-entry info">Logs cleared. System ready.</div>';
+            addLog('🗑️ Previous logs cleared', 'info');
+        }
+    </script>
+</body>
+</html>
+
+        <!-- Navigation -->
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-tab="dashboard">
+                <span>📊</span> Dashboard
+            </div>
+            <div class="nav-tab" data-tab="optimize">
+                <span>🚀</span> Optimize
+            </div>
+            <div class="nav-tab" data-tab="settings">
+                <span>⚙️</span> Settings
+            </div>
+            <div class="nav-tab" data-tab="analytics">
+                <span>📈</span> Analytics
+            </div>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number" id="totalProducts">0</span>
+                    <div class="stat-label">Products Found</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="processedProducts">0</span>
+                    <div class="stat-label">Processed</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="successRate">0%</span>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="keywordsAnalyzed">0</span>
+                    <div class="stat-label">Keywords Found</div>
+                </div>
+            </div>
+
+            <div class="main-grid">
+                <div class="main-panel">
+                    <div class="panel-header">
+                        <h2>🎯 Quick Start</h2>
+                        <p>Get started with optimizing your products</p>
+                    </div>
+                    <div class="panel-content">
+                        <div class="form-group">
+                            <label class="form-label">Product Limit (Optional)</label>
+                            <input type="number" id="productLimit" class="form-control" placeholder="Leave empty for all products" min="1">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Test Product Analysis</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" id="testKeyword" class="form-control" placeholder="Enter product title to test...">
+                                <button class="btn btn-secondary" id="testAnalysisBtn">🔍 Test</button>
+                            </div>
+                        </div>
+
+                        <div class="btn-group">
+                            <button class="btn btn-primary" id="previewBtn">
+                                👁️ Preview Products
+                            </button>
+                            <button class="btn btn-success" id="startOptimizationBtn">
+                                🚀 Start Optimization
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="keywords-panel">
+                    <div class="panel-header">
+                        <h2>🎯 Live Keywords</h2>
+                        <p>Real-time keyword analysis</p>
+                    </div>
+                    <div class="panel-content">
+                        <div id="keywordsDisplay">
+                            <div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+                                <div style="font-size: 3rem; margin-bottom: 15px;">🔍</div>
+                                <h4>No Active Analysis</h4>
+                                <p>Start optimization or test analysis to see keywords here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Optimize Tab -->
+        <div id="optimize" class="tab-content">
+            <div class="main-panel">
+                <div class="panel-header">
+                    <h2>🚀 Product Optimization</h2>
+                    <p>Configure and run your SEO optimization</p>
+                </div>
+                <div class="panel-content">
+                    <div class="form-group">
+                        <label class="form-label">Fields to Update</label>
+                        <div class="field-grid">
+                            <div class="field-item selected" data-field="title">
+                                <input type="checkbox" id="field_title" class="field-checkbox" checked>
+                                <div class="field-label">
+                                    <span>📝</span> Product Title
+                                </div>
+                                <div class="field-description">SEO-optimized product titles with trending keywords</div>
+                            </div>
+                            <div class="field-item selected" data-field="body_html">
+                                <input type="checkbox" id="field_body_html" class="field-checkbox" checked>
+                                <div class="field-label">
+                                    <span>📄</span> Product Description
+                                </div>
+                                <div class="field-description">Comprehensive HTML descriptions with product attributes</div>
+                            </div>
+                            <div class="field-item" data-field="product_type">
+                                <input type="checkbox" id="field_product_type" class="field-checkbox">
+                                <div class="field-label">
+                                    <span>🏷️</span> Product Type
+                                </div>
+                                <div class="field-description">Categorization based on your store structure</div>
+                            </div>
+                            <div class="field-item" data-field="vendor">
+                                <input type="checkbox" id="field_vendor" class="field-checkbox">
+                                <div class="field-label">
+                                    <span>🏢</span> Vendor/Brand
+                                </div>
+                                <div class="field-description">Brand assignment with rotation system</div>
+                            </div>
+                            <div class="field-item" data-field="handle">
+                                <input type="checkbox" id="field_handle" class="field-checkbox">
+                                <div class="field-label">
+                                    <span>🔗</span> URL Handle
+                                </div>
+                                <div class="field-description">SEO-friendly URL slugs</div>
+                            </div>
+                            <div class="field-item selected" data-field="seo_title">
+                                <input type="checkbox" id="field_seo_title" class="field-checkbox" checked>
+                                <div class="field-label">
+                                    <span>🎯</span> SEO Title
+                                </div>
+                                <div class="field-description">Meta titles optimized for search engines</div>
+                            </div>
+                            <div class="field-item selected" data-field="seo_description">
+                                <input type="checkbox" id="field_seo_description" class="field-checkbox" checked>
+                                <div class="field-label">
+                                    <span>📊</span> SEO Description
+                                </div>
+                                <div class="field-description">Meta descriptions with call-to-action</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="progress-container" id="progressContainer" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">Ready to start optimization</div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-primary" id="startBtn">
+                            🚀 Start Smart Optimization
+                        </button>
+                        <button class="btn btn-danger" id="stopBtn" style="display: none;">
+                            ⏹️ Stop Process
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="settings" class="tab-content">
+            <div class="main-grid">
+                <div class="main-panel">
+                    <div class="panel-header">
+                        <h2>🔑 API Configuration</h2>
+                        <p>Configure your Shopify and OpenAI credentials</p>
+                    </div>
+                    <div class="panel-content">
+                        <div class="form-group">
+                            <label class="form-label">Shopify Store Name</label>
+                            <input type="text" id="shopifyStore" class="form-control" placeholder="your-store.myshopify.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Shopify Admin Token</label>
+                            <input type="password" id="shopifyToken" class="form-control" placeholder="shpat_...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">OpenAI API Key</label>
+                            <input type="password" id="openaiKey" class="form-control" placeholder="sk-...">
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" id="saveSettingsBtn">💾 Save Settings</button>
+                            <button class="btn btn-secondary" id="testConnectionBtn">🔍 Test Connection</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="main-panel">
+                    <div class="panel-header">
+                        <h2>📈 Google Trends Settings</h2>
+                        <p>Configure keyword analysis and trends research</p>
+                    </div>
+                    <div class="panel-content">
+                        <div class="form-group">
+                            <label class="form-label" style="display: flex; justify-content: space-between; align-items: center;">
+                                Enable Google Trends Analysis
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="enableTrends" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Target Region</label>
+                            <select id="trendsRegion" class="form-control">
+                                <option value="DK">🇩🇰 Denmark</option>
+                                <option value="NO">🇳🇴 Norway</option>
+                                <option value="SE">🇸🇪 Sweden</option>
+                                <option value="DE">🇩🇪 Germany</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Language</label>
+                            <select id="trendsLanguage" class="form-control">
+                                <option value="da-DK">Danish</option>
+                                <option value="nb-NO">Norwegian</option>
+                                <option value="sv-SE">Swedish</option>
+                                <option value="de-DE">German</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Request Delay (seconds)</label>
+                            <input type="number" id="trendsDelay" class="form-control" value="20" min="5" max="60">
+                            <small style="color: var(--text-muted); font-size: 0.8rem;">Higher values reduce rate limiting but increase processing time</small>
+                        </div>
+                    </div>
+                </div
