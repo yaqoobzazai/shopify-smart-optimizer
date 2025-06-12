@@ -651,7 +651,58 @@ def generate_product_attributes_text(attributes):
         for key, value in metafields.items():
             attr_text += f"- {key}: {value}\n"
         attr_text += "\n"
-    
+
+    # Variants analysis
+    variants = attributes['variants']
+    if variants:
+        attr_text += f"🎨 VARIANTER OG SPECIFIKATIONER ({len(variants)} stk):\n"
+
+        # Collect all unique attributes
+        colors = set()
+        sizes = set()
+        materials = set()
+        weights = []
+        prices = []
+
+        for variant in variants:
+            if variant['option1'] and variant['option1'] != 'Default Title':
+                colors.add(variant['option1'])
+            if variant['option2'] and variant['option2'] != 'Default Title':
+                sizes.add(variant['option2'])
+            if variant['option3'] and variant['option3'] != 'Default Title':
+                materials.add(variant['option3'])
+
+            if variant['weight']:
+                try:
+                    weight_val = float(variant['weight'])
+                    unit = variant['weight_unit'] or 'g'
+                    weights.append(f"{weight_val}{unit}")
+                except:
+                    pass
+
+            if variant['price']:
+                try:
+                    prices.append(float(variant['price']))
+                except:
+                    pass
+
+        if colors:
+            attr_text += f"- Farver: {', '.join(sorted(colors))}\n"
+        if sizes:
+            attr_text += f"- Størrelser: {', '.join(sorted(sizes))}\n"
+        if materials:
+            attr_text += f"- Materialer: {', '.join(sorted(materials))}\n"
+        if weights:
+            unique_weights = list(set(weights))
+            attr_text += f"- Vægt: {', '.join(unique_weights)}\n"
+        if prices:
+            min_price = min(prices)
+            max_price = max(prices)
+            if min_price == max_price:
+                attr_text += f"- Pris: {min_price} DKK\n"
+            else:
+                attr_text += f"- Prisområde: {min_price}-{max_price} DKK\n"
+
     return attr_text
 
 COMPREHENSIVE_CONTENT_GENERATION_PROMPT = """
@@ -1132,54 +1183,3 @@ def main():
 
 if __name__=='__main__':
     main()
-    
-    # Variants analysis
-    variants = attributes['variants']
-    if variants:
-        attr_text += f"🎨 VARIANTER OG SPECIFIKATIONER ({len(variants)} stk):\n"
-        
-        # Collect all unique attributes
-        colors = set()
-        sizes = set()
-        materials = set()
-        weights = []
-        prices = []
-        
-        for variant in variants:
-            if variant['option1'] and variant['option1'] != 'Default Title':
-                colors.add(variant['option1'])
-            if variant['option2'] and variant['option2'] != 'Default Title':
-                sizes.add(variant['option2'])
-            if variant['option3'] and variant['option3'] != 'Default Title':
-                materials.add(variant['option3'])
-            
-            if variant['weight']:
-                try:
-                    weight_val = float(variant['weight'])
-                    unit = variant['weight_unit'] or 'g'
-                    weights.append(f"{weight_val}{unit}")
-                except:
-                    pass
-            
-            if variant['price']:
-                try:
-                    prices.append(float(variant['price']))
-                except:
-                    pass
-        
-        if colors:
-            attr_text += f"- Farver: {', '.join(sorted(colors))}\n"
-        if sizes:
-            attr_text += f"- Størrelser: {', '.join(sorted(sizes))}\n"
-        if materials:
-            attr_text += f"- Materialer: {', '.join(sorted(materials))}\n"
-        if weights:
-            unique_weights = list(set(weights))
-            attr_text += f"- Vægt: {', '.join(unique_weights)}\n"
-        if prices:
-            min_price = min(prices)
-            max_price = max(prices)
-            if min_price == max_price:
-                attr_text += f"- Pris: {min_price} DKK\n"
-            else:
-                attr_text += f"- Prisområde: {min_price}-{max_price} DKK\n"
